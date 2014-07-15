@@ -1,0 +1,13 @@
+{
+  "name": "electronichub",
+  "description": "A starter project for my site",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sunnry/electronichub.git",
+  "license": "GPLv2",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+  }
+}
+
