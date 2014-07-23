@@ -7,7 +7,7 @@ var errorhandler = require('errorhandler');
 var bodyparser = require('body-parser');
 var cookieparser = require('cookie-parser');
 var express_session = require('express-session');
-
+var fs = require('fs');
 
 
 
@@ -21,8 +21,11 @@ app.use(logerrors);
 app.use(express_session({secret:'keyboard cat'}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use("/public",express.static(__dirname + "/public"));
+app.use("/lib",express.static(__dirname + "/bower_components"));
 
-
+var http_port = 2000;
+var https_port = 2043;
 
 function logerrors(err,req,res,next){
         console.error(err.stack);
@@ -30,9 +33,21 @@ function logerrors(err,req,res,next){
 }
 
 
-var server = app.listen(2000,listen_callback);
+var hskey = fs.readFileSync('privatekey.pem');
+var hscert = fs.readFileSync('certificate.pem');
+
+var options = {
+		key:hskey,
+		cert:hscert
+	      };
+
+var server = http.createServer(app).listen(http_port,listen_callback);
+var sslserver = https.createServer(options,app).listen(https_port,listen_callbacks);
 
 function listen_callback(req,res){
-        console.log('we are listen on the port of' + server.address().port);
+        console.log('http:we are listen on the port of' + server.address().port);
 }
 
+function listen_callbacks(req,res){
+	console.log('https:we are listening on the port of ' + sslserver.address().port);
+}
