@@ -16,7 +16,8 @@
 	"passport-local":"1.0.x",
 	"passport-oauth":"1.0.x",
 	"express-session":"1.2.x",
-	"log-errors":"4.1.x"
+	"log-errors":"4.1.x",
+	"credential":"0.2.x"
    },
    "scripts":{
 	"postinstall": "bower install"

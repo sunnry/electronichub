@@ -8,12 +8,12 @@ var bodyparser = require('body-parser');
 var cookieparser = require('cookie-parser');
 var express_session = require('express-session');
 var fs = require('fs');
-
+var routes = require('./routes');
 
 
 var app = express();
 app.set('views',__dirname + '/views');
-app.set('view engine','ejs');
+app.set('view engine','jade');
 app.use(errorhandler());
 app.use(bodyparser());
 app.use(cookieparser());
@@ -26,6 +26,12 @@ app.use("/lib",express.static(__dirname + "/bower_components"));
 
 var http_port = 2000;
 var https_port = 2043;
+
+
+app.get('/',routes.index);
+app.get('/login',routes.login);
+app.post('/login',routes.loginVerify);
+
 
 function logerrors(err,req,res,next){
         console.error(err.stack);
@@ -41,8 +47,12 @@ var options = {
 		cert:hscert
 	      };
 
+
+//create http and https server
 var server = http.createServer(app).listen(http_port,listen_callback);
 var sslserver = https.createServer(options,app).listen(https_port,listen_callbacks);
+
+
 
 function listen_callback(req,res){
         console.log('http:we are listen on the port of' + server.address().port);
