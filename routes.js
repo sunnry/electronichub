@@ -21,3 +21,13 @@ exports.contact = function(req,res){
 exports.community = function(req,res){
 	res.render('community');
 }
+
+
+exports.signup = function(req,res){
+	res.render('signup');
+}
+
+
+exports.do_signup = function(req,res){
+	res.render('signup');
+}

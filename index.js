@@ -31,7 +31,8 @@ var https_port = 2043;
 app.get('/',routes.index);
 app.get('/login',routes.login);
 app.post('/login',routes.loginVerify);
-
+app.get('/signup',routes.signup);
+app.post('/signup',routes.do_signup);
 
 function logerrors(err,req,res,next){
         console.error(err.stack);

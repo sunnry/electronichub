@@ -1,0 +1,32 @@
+doctype html
+html(lang='en')
+  head
+    script(type='text/javascript').
+      var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);
+    meta(name='viewport', content='')
+    title Inc
+    link(rel='icon', type='image/png', href='https://d1hjm33yswheja.cloudfront.net/img/favicon.ico')
+    link(rel='fluid-icon', href='https://d1hjm33yswheja.cloudfront.net/img/icon_512x512@2x.png', title='Inc')
+    link(rel='stylesheet', href='/public/css/login.css', type='text/css')
+  body.login
+    #login(style='')
+      img(src='https://d1hjm33yswheja.cloudfront.net/img/logo-inc-b.png', height='72', width='72')
+      h1 Login in to your Inc
+      hr
+      p Sign p with your email
+      form(action='.', method='POST')
+        input(type='hidden', name='csrfmiddlewaretoken', value='i7I1xhigqCmr7V4RWNZxWUuYK9YyeaHb')
+        tr
+          th
+            label(for='id_email') Email:
+          td
+            input#id_email(maxlength='75', name='email', placeholder='Email', type='text')
+        tr
+          th
+            label(for='id_password') Password:
+          td
+            input#id_password(name='password', placeholder='Password', type='password')
+        input.btn.btn-primary(type='submit', value='Create new Account')
+        a.forgot(href='/accounts/password/reset/', style='font-size:14px; padding:15px 0; color:#999; display:inline-block') Forgot password?
+    script(type='text/javascript', src='/lib/jquery/dist/jquery.min.js', charset='utf-8')
+    script(type='text/javascript', src='/lib/bootstrap/dist/js/bootstrap.min.js')
