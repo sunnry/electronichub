@@ -18,7 +18,8 @@
 	"express-session":"1.2.x",
 	"log-errors":"4.1.x",
 	"credential":"0.2.x",
-	"mongodb":"1.4.8"
+	"mongodb":"1.4.8",
+	"bcrypt":"0.8.x"
    },
    "scripts":{
 	"postinstall": "bower install"
