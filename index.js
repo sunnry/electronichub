@@ -13,7 +13,6 @@ var format = require('util').format;
 var routes = require('./routes');
 /*database related modules*/
 var dbs = require('./dbs');
-var db_handler = dbs.setupMongoDb();
 
 var app = express();
 app.set('views',__dirname + '/views');
@@ -29,8 +28,17 @@ app.use("/public",express.static(__dirname + "/public"));
 app.use("/lib",express.static(__dirname + "/bower_components"));
 
 /*passport strategy setting*/
+
+function queryById(id,fn){
+	dbs.queryById(id,fn);
+}
+
+function queryByUsername(username,fn){
+	dbs.queryByAccountname(username,fn);
+}
+
 passport.serializeUser(function(user,done){
-	done(null,user.id);
+	done(null,user._id);
 });
 
 
@@ -41,12 +49,12 @@ passport.deserializeUser(function(id,done){
 			});
 
 
-passport.use(new localstrategy(function(username,password,done){
+passport.use(new localstrategy(function(account_name,password,done){
 			process.nextTick(function(){
-				queryByUsername(username,function(err,user){
+				queryByUsername(account_name,function(err,user){
 					if(err) {return done(err);}
 					if(!user){return done(null,false);}
-					if(user.password != password){
+					if(user.account_password != password){
 					return done(null,false);
 					}
 					return done(null,user);
@@ -61,9 +69,10 @@ var https_port = 2043;
 /*set routing*/
 app.get('/',routes.index);
 app.get('/login',routes.login);
-app.post('/login',routes.loginVerify);
+app.post('/login',passport.authenticate('local',{failureRedirect:'/login'}),routes.loginVerify);
 app.get('/signup',routes.signup);
 app.post('/signup',routes.do_signup);
+
 
 function logerrors(err,req,res,next){
         console.error(err.stack);

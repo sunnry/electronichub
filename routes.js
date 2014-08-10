@@ -1,5 +1,5 @@
 var dbs = require('./dbs');
-var dbhandler = dbs.setupMongoDb();
+
 
 exports.index = function(req,res){
 	res.render('index');
@@ -17,7 +17,9 @@ exports.login = function(req,res){
 
 
 exports.loginVerify = function(req,res){
-	res.render('login');
+	console.log(req.body.email);
+	console.log(req.body.password);
+	dbs.login(req,res,req.body.email,req.body.password);
 }
 
 exports.contact = function(req,res){
@@ -31,10 +33,18 @@ exports.community = function(req,res){
 
 
 exports.signup = function(req,res){
-	res.render('signup');
+	if(typeof(req.connection.encrypted) == 'undefined'){
+		res.redirect('https://127.0.0.1:2043/signup');
+	}
+	else if(typeof(req.connection.encrypted == 'object')){
+		res.render('signup');
+		
+	}
 }
 
 
 exports.do_signup = function(req,res){
-	res.render('signup');
+	console.log(req.body.email);
+	console.log(req.body.password);
+	dbs.signupNewUser(req,res,req.body.email,req.body.password);
 }
