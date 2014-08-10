@@ -8,10 +8,12 @@ var bodyparser = require('body-parser');
 var cookieparser = require('cookie-parser');
 var express_session = require('express-session');
 var fs = require('fs');
-var routes = require('./routes');
 var mongoClient = require('mongodb').MongoClient;
-
-
+var format = require('util').format;
+var routes = require('./routes');
+/*database related modules*/
+var dbs = require('./dbs');
+var db_handler = dbs.setupMongoDb();
 
 var app = express();
 app.set('views',__dirname + '/views');
@@ -28,16 +30,6 @@ app.use("/lib",express.static(__dirname + "/bower_components"));
 
 var http_port = 2000;
 var https_port = 2043;
-
-
-/*connect to mongodb*/
-mongoClient.connect('mongodb://127.0.0.1/test',function(err,db){
-						  if(err) throw err;
-						  console.log("connect to mongodb succeed\n");						  
-
-						});
-
-
 
 /*set routing*/
 app.get('/',routes.index);

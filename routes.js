@@ -1,7 +1,9 @@
+var dbs = require('./dbs');
+var dbhandler = dbs.setupMongoDb();
+
 exports.index = function(req,res){
 	res.render('index');
 };
-
 
 
 exports.login = function(req,res){
