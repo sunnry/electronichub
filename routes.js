@@ -7,7 +7,12 @@ exports.index = function(req,res){
 
 
 exports.login = function(req,res){
-	res.render('login');
+	if(typeof(req.connection.encrypted) == 'undefined'){
+		res.redirect('https://127.0.0.1:2043/login');
+	}
+	else if(typeof(req.connection.encrypted == 'object')){
+		res.render('login');
+	}
 }
 
 

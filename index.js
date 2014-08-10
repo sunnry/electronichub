@@ -28,6 +28,33 @@ app.use(passport.session());
 app.use("/public",express.static(__dirname + "/public"));
 app.use("/lib",express.static(__dirname + "/bower_components"));
 
+/*passport strategy setting*/
+passport.serializeUser(function(user,done){
+	done(null,user.id);
+});
+
+
+passport.deserializeUser(function(id,done){
+				queryById(id,function(err,user){
+					done(err,user);
+				});
+			});
+
+
+passport.use(new localstrategy(function(username,password,done){
+			process.nextTick(function(){
+				queryByUsername(username,function(err,user){
+					if(err) {return done(err);}
+					if(!user){return done(null,false);}
+					if(user.password != password){
+					return done(null,false);
+					}
+					return done(null,user);
+					});
+				});
+			}));
+
+
 var http_port = 2000;
 var https_port = 2043;
 
